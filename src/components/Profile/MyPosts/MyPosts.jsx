@@ -1,15 +1,20 @@
 import React from 'react';
-import classes from './MyPosts.module.css';
+import style from './MyPosts.module.css';
 import Post from './Post/Post';
 
 const MyPosts = (props) => {
   return (
-    <div>
+    <div className={style.myPosts}>
         my posts
           <div>
-          new post
+            <div>
+              <textarea />
+              <div>
+                <button>Add post</button>
+              </div>
+            </div>
           </div>
-        <div className={classes.posts}>
+        <div className={style.posts}>
           <Post message='First post' like_count='5' />
           <Post message='Second post' />
           <Post message='some text' />

@@ -8,16 +8,13 @@
     color: whitesmoke;
 }
 
-.dialogsList .item {
-  
-}
-
-.dialogsList .active {
-    color: gold;
+.DialogsHeader {
+    color: black;
+    font-size: 1.2em;
+    font-weight: bold;
+    padding-bottom: 10px;
 }
 
 .messages {
     padding: 15px;
 }
-
-.messages .message {}
