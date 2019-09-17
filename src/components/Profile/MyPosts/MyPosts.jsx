@@ -3,6 +3,16 @@ import style from './MyPosts.module.css';
 import Post from './Post/Post';
 
 const MyPosts = (props) => {
+  let postsData = [
+    {id : 1, postText : "First post", likesCount : 5},
+    {id : 2, postText : "Second post", likesCount : 3},
+    {id : 3, postText : "some text", likesCount : 25},
+    {id : 4, postText : "more some text", likesCount : 1}
+  ];
+
+  let postsList = postsData
+    .map(post => <Post message={post.postText} likesCount={post.likesCount} />);
+
   return (
     <div className={style.myPosts}>
         my posts
@@ -15,9 +25,7 @@ const MyPosts = (props) => {
             </div>
           </div>
         <div className={style.posts}>
-          <Post message='First post' like_count='5' />
-          <Post message='Second post' />
-          <Post message='some text' />
+          {postsList}
         </div>
       </div>
   )
