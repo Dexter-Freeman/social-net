@@ -10,15 +10,15 @@ import News from './components/News/News';
 import Settings from './components/Settings/Settings';
 import {BrowserRouter, Route} from 'react-router-dom';
 
-function App() {
+function App(props) {
   return (
     <BrowserRouter>
       <div className="app-wrapper">
         <Header />
         <Navbar />
         <div className="app-wrapper-content">
-          <Route path='/profile' component={Profile}/>
-          <Route path='/dialogs' component={Dialogs}/>
+          <Route path='/profile' render = {() => <Profile postsData = {props.data.postsData} />} />
+          <Route path='/dialogs' render = {() => <Dialogs dialogsData = {props.data.dialogsData} messagesData = {props.data.messagesData} />} />
           <Route path='/messages' component={Messages}/>
           <Route path='/music' component={Music}/>
           <Route path='/news' component={News}/>
