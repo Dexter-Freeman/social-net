@@ -1,3 +1,7 @@
+.item {
+    padding: 2px 0;
+}
+
 .item a{
     color: whitesmoke;
     text-decoration: none;
@@ -5,4 +9,11 @@
 
 .item a.active {
     color: grey;
+  }
+
+  .dialogItemAva {
+      border-radius: 50%;
+      width: 40px;
+      vertical-align: middle;
+      margin-right: 10px;
   }

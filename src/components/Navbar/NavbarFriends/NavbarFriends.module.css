@@ -1,0 +1,14 @@
+.navbarFriends {
+    color: antiquewhite;
+    margin-top: 50px;
+}
+
+.navbarFriendsHeader {
+    text-align: center;
+
+}
+
+.navbarFriendsList {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
