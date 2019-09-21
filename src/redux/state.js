@@ -1,3 +1,5 @@
+import rerenderTree from './../render';
+
 const postsData = [
     {id : 1, postText : "First post", likesCount : 5},
     {id : 2, postText : "Second post", likesCount : 3},
@@ -17,9 +19,9 @@ const dialogsData = [
 
 const messagesData = [
     {id : 1, messageText : "Hello! How are you?"},
-    {id : 1, messageText : "I'm develope my own social network"},
-    {id : 1, messageText : "Wow! It's amazing!"},
-    {id : 1, messageText : "Yes!"}
+    {id : 2, messageText : "I'm develope my own social network"},
+    {id : 3, messageText : "Wow! It's amazing!"},
+    {id : 4, messageText : "Yes!"}
 ];
 
 const navbarFriends = [
@@ -30,15 +32,51 @@ const navbarFriends = [
 
 const state = {
     profilePage : {
-        postsData : postsData
+        postsData : postsData,
+        newPostText : ''
     },
     dialogsPage: {
         messagesData : messagesData,
-        dialogsData : dialogsData
+        dialogsData : dialogsData,
+        newMessageText: ''
     },
     navbarFriends : {
         navbarFriends : navbarFriends
     }    
 }
 
+const addPost = (text) => {
+    let id = postsData.length + 1;
+    let newPost = {
+        id : id,
+        postText : text,
+        likesCount : 0
+    }
+    postsData.push(newPost);
+    state.profilePage.newPostText = '';
+    rerenderTree(state);
+}
+
+const changeNewPostText = (text) => {
+    state.profilePage.newPostText = text;
+    rerenderTree(state);
+}
+
+const sendMessage = (message) => {
+    let id = messagesData.length + 1;
+    let newMessage = {
+        id : id,
+        messageText : message
+    }
+    messagesData.push(newMessage);
+    state.dialogsPage.newMessageText = '';
+    rerenderTree(state);
+}
+
+const changeNewMessageText = (text) => {
+    state.dialogsPage.newMessageText = text;
+    rerenderTree(state);
+}
+
+export { addPost, sendMessage, changeNewMessageText, changeNewPostText };
 export default state;
