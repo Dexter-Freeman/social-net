@@ -1,4 +1,6 @@
-import rerenderTree from './../render';
+let rerenderTree = () => {
+
+};
 
 const postsData = [
     {id : 1, postText : "First post", likesCount : 5},
@@ -45,11 +47,11 @@ const state = {
     }    
 }
 
-const addPost = (text) => {
+const addPost = () => {
     let id = postsData.length + 1;
     let newPost = {
         id : id,
-        postText : text,
+        postText : state.profilePage.newPostText,
         likesCount : 0
     }
     postsData.push(newPost);
@@ -62,11 +64,11 @@ const changeNewPostText = (text) => {
     rerenderTree(state);
 }
 
-const sendMessage = (message) => {
+const sendMessage = () => {
     let id = messagesData.length + 1;
     let newMessage = {
         id : id,
-        messageText : message
+        messageText : state.dialogsPage.newMessageText
     }
     messagesData.push(newMessage);
     state.dialogsPage.newMessageText = '';
@@ -78,5 +80,9 @@ const changeNewMessageText = (text) => {
     rerenderTree(state);
 }
 
-export { addPost, sendMessage, changeNewMessageText, changeNewPostText };
+const subscribe = (observer) => {
+    rerenderTree = observer;
+}
+
+export { addPost, sendMessage, changeNewMessageText, changeNewPostText, subscribe };
 export default state;
