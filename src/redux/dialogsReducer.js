@@ -1,22 +1,79 @@
 const sendMessage = 'sendMessage';
 const changeNewMessageText = 'changeNewMessageText';
 
-const dialogsReducer = (dialogsPage, action) => {
+const initialState = {
+    messagesData: [{
+            id: 1,
+            messageText: "Hello! How are you?"
+        },
+        {
+            id: 2,
+            messageText: "I'm develope my own social network"
+        },
+        {
+            id: 3,
+            messageText: "Wow! It's amazing!"
+        },
+        {
+            id: 4,
+            messageText: "Yes!"
+        }
+    ],
+    dialogsData: [{
+            id: 1,
+            name: 'User 1',
+            avaUrl: 'http://pikchyriki.net/avatar/prikolnye/100/12.jpg'
+        },
+        {
+            id: 2,
+            name: 'User 2',
+            avaUrl: 'http://pikchyriki.net/avatar/prikolnye/100/12.jpg'
+        },
+        {
+            id: 3,
+            name: 'User 3',
+            avaUrl: 'http://pikchyriki.net/avatar/prikolnye/100/12.jpg'
+        },
+        {
+            id: 4,
+            name: 'User 4',
+            avaUrl: 'http://pikchyriki.net/avatar/prikolnye/100/12.jpg'
+        },
+        {
+            id: 5,
+            name: 'User 5',
+            avaUrl: 'http://pikchyriki.net/avatar/prikolnye/100/12.jpg'
+        },
+        {
+            id: 6,
+            name: 'User 6',
+            avaUrl: 'http://pikchyriki.net/avatar/prikolnye/100/12.jpg'
+        },
+        {
+            id: 7,
+            name: 'User 7',
+            avaUrl: 'http://pikchyriki.net/avatar/prikolnye/100/12.jpg'
+        }
+    ],
+    newMessageText: ''
+};
+
+const dialogsReducer = (state = initialState, action) => {
     switch (action.type) {
         case sendMessage:
-            let id = dialogsPage.messagesData.length + 1;
+            let id = state.messagesData.length + 1;
             let newMessage = {
                 id: id,
-                messageText: dialogsPage.newMessageText
+                messageText: state.newMessageText
             }
-            dialogsPage.messagesData.push(newMessage);
-            dialogsPage.newMessageText = '';
-            return dialogsPage;
+            state.messagesData.push(newMessage);
+            state.newMessageText = '';
+            return state;
         case changeNewMessageText:
-            dialogsPage.newMessageText = action.newMessageText;
-            return dialogsPage;
+            state.newMessageText = action.newMessageText;
+            return state;
         default:
-            return dialogsPage;
+            return state;
     }
 };
 

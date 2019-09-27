@@ -1,23 +1,48 @@
 const addPost = 'addPost';
 const changeNewPostText = 'changeNewPostText';
 
-const profileReducer = (profilePage, action) => {
+const initialState = {
+    postsData: [{
+            id: 1,
+            postText: "First post",
+            likesCount: 5
+        },
+        {
+            id: 2,
+            postText: "Second post",
+            likesCount: 3
+        },
+        {
+            id: 3,
+            postText: "some text",
+            likesCount: 25
+        },
+        {
+            id: 4,
+            postText: "more some text",
+            likesCount: 1
+        }
+    ],
+    newPostText: ''
+};
+
+const profileReducer = (state = initialState, action) => {
     switch (action.type) {
         case addPost:
-            let id = profilePage.postsData.length + 1;
+            let id = state.postsData.length + 1;
             let newPost = {
                 id: id,
-                postText: profilePage.newPostText,
+                postText: state.newPostText,
                 likesCount: 0
             };
-            profilePage.postsData.push(newPost);
-            profilePage.newPostText = '';
-            return profilePage;
+            state.postsData.push(newPost);
+            state.newPostText = '';
+            return state;
         case changeNewPostText:
-            profilePage.newPostText = action.newPostText;
-            return profilePage;
+            state.newPostText = action.newPostText;
+            return state;
         default:
-            return profilePage;
+            return state;
     }
 };
 
