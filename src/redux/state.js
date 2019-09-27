@@ -1,21 +1,5 @@
-const addPost = 'addPost';
-const changeNewPostText = 'changeNewPostText';
-const sendMessage = 'sendMessage';
-const changeNewMessageText = 'changeNewMessageText';
-const actionCreateAddPost = () => ({
-    type: addPost
-});
-const actionCreateChangeNewPostText = (newPostText) => ({
-    type: changeNewPostText,
-    newPostText: newPostText
-});
-const actionCreateSendMessage = () => ({
-    type: sendMessage
-});
-const actionCreateChangeNewMessageText = (newMessageText) => ({
-    type: changeNewMessageText,
-    newMessageText: newMessageText
-});
+import profileReducer from './profileReducer';
+import dialogsReducer from './dialogsReducer';
 
 let store = {
 
@@ -132,52 +116,11 @@ let store = {
         return this._state;
     },
 
-    changeNewPostText(text) {
-
-    },
-
-    changeNewMessageText(text) {
-
-    },
-
-    sendMessage() {
-
-    },
-
     dispatch(action) {
-        if (action.type === addPost) {
-            let id = this._state.profilePage.postsData.length + 1;
-            let newPost = {
-                id: id,
-                postText: this._state.profilePage.newPostText,
-                likesCount: 0
-            };
-            this._state.profilePage.postsData.push(newPost);
-            this._state.profilePage.newPostText = '';
-            this._subscriber(this._state);
-        } else if (action.type === changeNewPostText) {
-            this._state.profilePage.newPostText = action.newPostText;
-            this._subscriber(this._state);
-        } else if (action.type === sendMessage) {
-            let id = this._state.dialogsPage.messagesData.length + 1;
-            let newMessage = {
-                id: id,
-                messageText: this._state.dialogsPage.newMessageText
-            }
-            this._state.dialogsPage.messagesData.push(newMessage);
-            this._state.dialogsPage.newMessageText = '';
-            this._subscriber(this._state);
-        } else if (action.type === changeNewMessageText) {
-            this._state.dialogsPage.newMessageText = action.newMessageText;
-            this._subscriber(this._state);
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+        this._subscriber(this._state);  
     }
 }
 
 export default store;
-export {
-    actionCreateAddPost,
-    actionCreateChangeNewPostText,
-    actionCreateSendMessage,
-    actionCreateChangeNewMessageText
-};
