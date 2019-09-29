@@ -7,32 +7,35 @@ import DialogsContainer from './components/Dialogs/DialogsContainer';
 import Music from './components/Music/Music';
 import News from './components/News/News';
 import Settings from './components/Settings/Settings';
-import {BrowserRouter, Route} from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 function App(props) {
-  return (
-    <BrowserRouter>
-      <div className="app-wrapper">
-        <Header />
-        <Navbar state = {props.store.getState().navbarFriends}/>
-        <div className="app-wrapper-content">
+	return (
 
-          <Route path='/profile' 
-            render = {() => <Profile 
-              store = {props.store}
-              />} />
+		<div className="app-wrapper">
+			<Header />
+			<Navbar
+				// state={props.store.getState().navbarFriends}
+			/>
+			<div className="app-wrapper-content">
 
-          <Route path='/dialogs' 
-            render = {() => <DialogsContainer 
-              store = {props.store} />} />
+				<Route path='/profile'
+					render={() => <Profile
+						// store={props.store}
+					/>} />
 
-          <Route path='/music' component={Music}/>
-          <Route path='/news' component={News}/>
-          <Route path='/settings' component={Settings}/>
-        </div>
-      </div>
-    </BrowserRouter>
-  );
+				<Route path='/dialogs'
+					render={() => <DialogsContainer
+						// store={props.store} 
+						/>} />
+
+				<Route path='/music' component={Music} />
+				<Route path='/news' component={News} />
+				<Route path='/settings' component={Settings} />
+			</div>
+		</div>
+
+	);
 }
 
 export default App;
