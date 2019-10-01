@@ -11,30 +11,21 @@ import { Route } from 'react-router-dom';
 
 function App(props) {
 	return (
-
 		<div className="app-wrapper">
 			<Header />
-			<Navbar
-				// state={props.store.getState().navbarFriends}
-			/>
+			<Navbar />
 			<div className="app-wrapper-content">
-
 				<Route path='/profile'
-					render={() => <Profile
-						// store={props.store}
-					/>} />
+					render={() => <Profile />} />
 
 				<Route path='/dialogs'
-					render={() => <DialogsContainer
-						// store={props.store} 
-						/>} />
+					render={() => <DialogsContainer />} />
 
 				<Route path='/music' component={Music} />
 				<Route path='/news' component={News} />
 				<Route path='/settings' component={Settings} />
 			</div>
 		</div>
-
 	);
 }
 
