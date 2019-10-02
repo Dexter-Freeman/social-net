@@ -4,7 +4,7 @@ import NavbarFriendItem from './NavbarFriendItem/NavbarFriendItem';
 
 const NavbarFriends = (props) => {
     let navbarFriendsList = props.state.map(
-        friend => <NavbarFriendItem state = {friend} />
+        friend => <NavbarFriendItem state = {friend} key = {friend.id} />
     );
     return (
         <div className = {style.navbarFriends}>
