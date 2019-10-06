@@ -1,6 +1,8 @@
 const follow = 'follow';
 const unFollow = 'unFollow';
 const setUsers = 'setUsers';
+const setUsersCount = 'setUsersCount';
+const setCurrentPage = 'setCurrentPage';
 
 const initialState = {
     users: [
@@ -11,7 +13,10 @@ const initialState = {
         // { id: 3, avaUrl : 'http://www.alluserpics.com/data/thumbnails/17/03102.jpg', followed: false, fullName: 'Daniil', status: 'I am a boss too', location: { city: 'Schelkino', country: 'Crimea' } },
         // { id: 4, avaUrl : 'http://www.alluserpics.com/data/thumbnails/17/03102.jpg', followed: false, fullName: 'Lena', status: 'I am a boss too', location: { city: 'Schelkino', country: 'Crimea' } },
 
-    ]
+    ],
+    pageSize : 5,
+    totalCount : 0,
+    currentPage : 1
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -39,7 +44,11 @@ const usersReducer = (state = initialState, action) => {
                     })
             }
         case setUsers:
-            return { ...state, users : [ ...state.users, ...action.users ] }
+            return { ...state, users : [ ...action.users ] }
+        case setUsersCount: 
+            return { ...state, totalCount : action.totalCount }
+        case setCurrentPage: 
+            return { ...state, currentPage : action.currentPage }
         default:
             return state;
     }
@@ -60,6 +69,16 @@ const setUsersAC = (users) => ({
     users
 })
 
-export { followAC, unFollowAC, setUsersAC };
+const setUsersCountAC = (totalCount) => ({
+    type: setUsersCount,
+    totalCount
+})
+
+const setCurrentPagetAC = (currentPage) => ({
+    type: setCurrentPage,
+    currentPage
+})
+
+export { followAC, unFollowAC, setUsersAC, setUsersCountAC, setCurrentPagetAC };
 
 export default usersReducer;
