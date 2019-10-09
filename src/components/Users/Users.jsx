@@ -1,5 +1,6 @@
 import React from 'react';
 import style from './Users.module.css';
+import Preloader from '../common/Preloader/Preloader';
 
 const Users = (props) => {
     
@@ -32,6 +33,7 @@ const Users = (props) => {
     );
     return (
         <div>
+           {props.isFetching ? <Preloader /> : null}
             <div className='usersPagination'>
                 {pagesList}
             </div>
