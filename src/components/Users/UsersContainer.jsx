@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import React from 'react';
 import Axios from 'axios';
 import Users from './Users';
-import { followAC, unFollowAC, setUsersAC, setUsersCountAC, setCurrentPagetAC, toggleIsFetchingAC } from '../../redux/usersReducer';
+import { follow, unFollow, setUsers, setUsersCount, setCurrentPage, toggleIsFetching } from '../../redux/usersReducer';
 
 class UsersContainer extends React.Component {
     debugger;
@@ -17,7 +17,6 @@ class UsersContainer extends React.Component {
     }
 
     getUsers(page) {
-        // this.props.setCurrentPage(page);
         this.props.toggleIsFetching(true);
         Axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${page}`)
             .then((response) => {
@@ -55,15 +54,16 @@ const mapStateToProps = (state) => {
     }
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        follow: (userId) => dispatch(followAC(userId)),
-        unFollow: (userId) => dispatch(unFollowAC(userId)),
-        setUsers: (users) => dispatch(setUsersAC(users)),
-        setUsersCount: (totalCount) => dispatch(setUsersCountAC(totalCount)),
-        setCurrentPage: (currentPage) => dispatch(setCurrentPagetAC(currentPage)),
-        toggleIsFetching : (isFetching) => dispatch(toggleIsFetchingAC(isFetching))
-    }
-};
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         follow: (userId) => dispatch(followAC(userId)),
+//         unFollow: (userId) => dispatch(unFollowAC(userId)),
+//         setUsers: (users) => dispatch(setUsersAC(users)),
+//         setUsersCount: (totalCount) => dispatch(setUsersCountAC(totalCount)),
+//         setCurrentPage: (currentPage) => dispatch(setCurrentPagetAC(currentPage)),
+//         toggleIsFetching : (isFetching) => dispatch(toggleIsFetchingAC(isFetching))
+//     }
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+export default connect(mapStateToProps, 
+    {follow, unFollow, setUsers, setUsersCount, setCurrentPage, toggleIsFetching })(UsersContainer);
