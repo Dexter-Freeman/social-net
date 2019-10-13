@@ -5,7 +5,6 @@ import Users from './Users';
 import { follow, unFollow, setUsers, setUsersCount, setCurrentPage, toggleIsFetching } from '../../redux/usersReducer';
 
 class UsersContainer extends React.Component {
-    debugger;
     componentDidMount() {
         this.props.toggleIsFetching(true);
         Axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`)

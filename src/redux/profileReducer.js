@@ -1,7 +1,9 @@
 const addPost = 'addPost';
 const changeNewPostText = 'changeNewPostText';
+const Set_User_Profile = 'Set_User_Profile';
 
 const initialState = {
+    profile : null,
     postsData: [{
             id: 1,
             postText: "First post",
@@ -43,6 +45,9 @@ const profileReducer = (state = initialState, action) => {
 
         case changeNewPostText:
             return {...state, newPostText : action.newPostText};
+        
+        case Set_User_Profile:
+            return { ...state, profile : action.profile }
             
         default:
             return state;
@@ -58,8 +63,10 @@ const actionCreateChangeNewPostText = (newPostText) => ({
     newPostText: newPostText
 });
 
-export {
-    actionCreateAddPost,
-    actionCreateChangeNewPostText
-};
+const setUserProfile = (profile) => ({
+    type: Set_User_Profile,
+    profile
+})
+
+export { actionCreateAddPost, actionCreateChangeNewPostText, setUserProfile };
 export default profileReducer;
