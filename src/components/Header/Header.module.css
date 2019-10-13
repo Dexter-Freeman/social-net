@@ -1,8 +1,23 @@
 .header {
     grid-area: h;
     background-color: #8c8989;
+    padding-right: 10px;
+    padding-top: 5px;
   }
   
   .header img {
     width: 80px;
+  }
+
+  .loginBlock {
+    float: right;
+  }
+
+  .loginBlock a {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .userName {
+    color: white;
   }
