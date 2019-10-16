@@ -7,7 +7,9 @@ import { follow, unFollow, setUsers, setUsersCount, setCurrentPage, toggleIsFetc
 class UsersContainer extends React.Component {
     componentDidMount() {
         this.props.toggleIsFetching(true);
-        Axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`)
+        Axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`, {
+            withCredentials: true
+        })
             .then((response) => {
                 this.props.toggleIsFetching(false);
                 this.props.setUsers(response.data.items);
@@ -17,7 +19,10 @@ class UsersContainer extends React.Component {
 
     getUsers(page) {
         this.props.toggleIsFetching(true);
-        Axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${page}`)
+        Axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${page}`, {
+            withCredentials: true   // withCredentials: true прикрепляет к запросу куки, 
+                                    //т.е. сервер видит что я авторизован или не авторизован
+        })
             .then((response) => {
                 this.props.toggleIsFetching(false);
                 this.props.setUsers(response.data.items);
@@ -52,17 +57,6 @@ const mapStateToProps = (state) => {
         isFetching: state.usersPage.isFetching
     }
 };
-
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         follow: (userId) => dispatch(followAC(userId)),
-//         unFollow: (userId) => dispatch(unFollowAC(userId)),
-//         setUsers: (users) => dispatch(setUsersAC(users)),
-//         setUsersCount: (totalCount) => dispatch(setUsersCountAC(totalCount)),
-//         setCurrentPage: (currentPage) => dispatch(setCurrentPagetAC(currentPage)),
-//         toggleIsFetching : (isFetching) => dispatch(toggleIsFetchingAC(isFetching))
-//     }
-// };
 
 export default connect(mapStateToProps, 
     {follow, unFollow, setUsers, setUsersCount, setCurrentPage, toggleIsFetching })(UsersContainer);
