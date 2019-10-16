@@ -2,7 +2,7 @@ import React from 'react';
 import style from './Users.module.css';
 import Preloader from '../common/Preloader/Preloader';
 import { NavLink } from 'react-router-dom';
-import Axios from 'axios';
+import usersAPI from './../../api/api';
 
 const Users = (props) => {
 
@@ -10,7 +10,7 @@ const Users = (props) => {
         return <span key={pageNumber}
             onClick={() => {
                 props.setCurrentPage(pageNumber);
-                props.getUsers(pageNumber);
+                props.getUsersFromPage(pageNumber);
             }}
             className={props.currentPage === pageNumber ? style.currentPage : style.paginationIem}>
             {pageNumber}
@@ -27,30 +27,18 @@ const Users = (props) => {
                 </NavLink>
                 {user.followed ?
                     <button onClick={() => {
-                        Axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`, {
-                            withCredentials: true,  // withCredentials: true прикрепляет к запросу куки, 
-                                                    //т.е. сервер видит что я авторизован или не авторизован
-                            headers : { // API-KEY взят из аккаунта в social-network.samuraijs.com,
-                                        // его сгенерировал сервер, нужен для полного доступа к api
-                                "API-KEY" : "5995d704-6605-4021-be3a-75799fb9ae6d"
-                            }
-                        })
-                            .then((response) => {
-                                if (response.data.resultCode === 0) {
+                        usersAPI.unFollow(user.id)
+                            .then((data) => {
+                                if (data.resultCode === 0) {
                                     props.unFollow(user.id)
                                 }
                             })
                     }
                     } >Unfollow</button>
                     : <button onClick={() => {
-                        Axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`, {}, {
-                            withCredentials: true,
-                            headers : {
-                                "API-KEY" : "5995d704-6605-4021-be3a-75799fb9ae6d"
-                            }
-                        })
-                            .then((response) => {
-                                if (response.data.resultCode === 0) {
+                        usersAPI.follow(user.id)
+                            .then((data) => {
+                                if (data.resultCode === 0) {
                                     props.follow(user.id)
                                 }
                             })
@@ -72,7 +60,7 @@ const Users = (props) => {
                 {pagesList}
             </div>
             <div className={style.usersList}>
-                <button onClick={props.getUsers} >Get Users</button>
+                {/* <button onClick={props.getUsers} >Get Users</button> */}
                 <div>
                     {usersList}
                 </div>

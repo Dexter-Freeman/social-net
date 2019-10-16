@@ -1,31 +1,26 @@
 import { connect } from 'react-redux';
 import React from 'react';
-import Axios from 'axios';
 import Users from './Users';
+import usersAPI from './../../api/api';
 import { follow, unFollow, setUsers, setUsersCount, setCurrentPage, toggleIsFetching } from '../../redux/usersReducer';
 
 class UsersContainer extends React.Component {
     componentDidMount() {
         this.props.toggleIsFetching(true);
-        Axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`, {
-            withCredentials: true
-        })
-            .then((response) => {
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
+            .then((data) => {
                 this.props.toggleIsFetching(false);
-                this.props.setUsers(response.data.items);
-                this.props.setUsersCount(response.data.totalCount);
+                this.props.setUsers(data.items);
+                this.props.setUsersCount(data.totalCount);
             })
     }
 
-    getUsers(page) {
+    getUsersFromPage(page) {
         this.props.toggleIsFetching(true);
-        Axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${page}`, {
-            withCredentials: true   // withCredentials: true прикрепляет к запросу куки, 
-                                    //т.е. сервер видит что я авторизован или не авторизован
-        })
-            .then((response) => {
+        usersAPI.getUsers(page, this.props.pageSize)
+            .then((data) => {
                 this.props.toggleIsFetching(false);
-                this.props.setUsers(response.data.items);
+                this.props.setUsers(data.items);
             })
     }
 
@@ -38,7 +33,7 @@ class UsersContainer extends React.Component {
         return (<Users
             pages={pages}
             setCurrentPage={this.props.setCurrentPage}
-            getUsers={this.getUsers.bind(this)}
+            getUsersFromPage={this.getUsersFromPage.bind(this)}
             currentPage={this.props.currentPage}
             users={this.props.users}
             unFollow={this.props.unFollow}
