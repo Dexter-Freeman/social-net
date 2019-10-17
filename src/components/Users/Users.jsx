@@ -5,7 +5,6 @@ import { NavLink } from 'react-router-dom';
 import usersAPI from './../../api/api';
 
 const Users = (props) => {
-
     let pagesList = props.pages.map((pageNumber) => {
         return <span key={pageNumber}
             onClick={() => {
@@ -26,22 +25,28 @@ const Users = (props) => {
                         alt='my ava' />
                 </NavLink>
                 {user.followed ?
-                    <button onClick={() => {
+                    <button disabled={props.isFollowingProgress.some(id => id===user.id)} onClick={() => {
+                        props.toggleIsFollowingProgress(true, user.id);
                         usersAPI.unFollow(user.id)
                             .then((data) => {
                                 if (data.resultCode === 0) {
                                     props.unFollow(user.id)
+                                    props.toggleIsFollowingProgress(false, user.id);
                                 }
                             })
+                        
                     }
                     } >Unfollow</button>
-                    : <button onClick={() => {
+                    : <button disabled={props.isFollowingProgress.some(id => id===user.id)} onClick={() => {
+                        props.toggleIsFollowingProgress(true, user.id);
                         usersAPI.follow(user.id)
                             .then((data) => {
                                 if (data.resultCode === 0) {
                                     props.follow(user.id)
+                                    props.toggleIsFollowingProgress(false, user.id);
                                 }
                             })
+                       
                     }
                     } >Follow</button>}
             </div>

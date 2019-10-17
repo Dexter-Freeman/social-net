@@ -4,6 +4,7 @@ const SETUSERS = 'SETUSERS';
 const SETUSERSCOUNT = 'SETUSERSCOUNT';
 const SETCURRENTPAGE = 'SETCURRENTPAGE';
 const TOGGLEISFETCHING = 'TOGGLEISFETCHING';
+const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS';
 
 const initialState = {
     users: [
@@ -18,7 +19,8 @@ const initialState = {
     pageSize : 5,
     totalCount : 0,
     currentPage : 1,
-    isFetching : true
+    isFetching : true,
+    isFollowingProgress : []
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -53,33 +55,39 @@ const usersReducer = (state = initialState, action) => {
             return { ...state, currentPage : action.currentPage }
         case TOGGLEISFETCHING:
             return { ...state, isFetching : action.isFetching }
+        case TOGGLE_IS_FOLLOWING_PROGRESS:
+            return { ...state, 
+                isFollowingProgress : 
+                    action.isFetching ?
+                    [ ...state.isFollowingProgress, action.userId] 
+                    : state.isFollowingProgress.filter(userId => userId !== action.userId)}
         default:
             return state;
     }
 };
 
 const follow = (userId) => ({
-    type: FOLLOW,
+    type : FOLLOW,
     userId
 });
 
 const unFollow = (userId) => ({
-    type: UNFOLLOW,
+    type : UNFOLLOW,
     userId
 });
 
 const setUsers = (users) => ({
-    type: SETUSERS,
+    type : SETUSERS,
     users
 })
 
 const setUsersCount = (totalCount) => ({
-    type: SETUSERSCOUNT,
+    type : SETUSERSCOUNT,
     totalCount
 })
 
 const setCurrentPage = (currentPage) => ({
-    type: SETCURRENTPAGE,
+    type : SETCURRENTPAGE,
     currentPage
 })
 
@@ -88,6 +96,12 @@ const toggleIsFetching = (isFetching) => ({
     isFetching
 })
 
-export { follow, unFollow, setUsers, setUsersCount, setCurrentPage, toggleIsFetching };
+const toggleIsFollowingProgress = (isFetching, userId) => ({
+    type : TOGGLE_IS_FOLLOWING_PROGRESS,
+    userId,
+    isFetching
+})
+
+export { follow, unFollow, setUsers, setUsersCount, setCurrentPage, toggleIsFetching, toggleIsFollowingProgress };
 
 export default usersReducer;
