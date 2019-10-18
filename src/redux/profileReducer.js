@@ -1,3 +1,5 @@
+import usersAPI from './../api/api';
+
 const addPost = 'addPost';
 const changeNewPostText = 'changeNewPostText';
 const Set_User_Profile = 'Set_User_Profile';
@@ -63,10 +65,17 @@ const actionCreateChangeNewPostText = (newPostText) => ({
     newPostText: newPostText
 });
 
-const setUserProfile = (profile) => ({
+const setUserProfileAC = (profile) => ({
     type: Set_User_Profile,
     profile
-})
+});
+
+const setUserProfile = (userId) => (dispatch) => {  // Thunk creator
+    usersAPI.setUserProfile(userId)
+    .then((profile) => {
+        dispatch(setUserProfileAC(profile));
+    })
+};
 
 export { actionCreateAddPost, actionCreateChangeNewPostText, setUserProfile };
 export default profileReducer;

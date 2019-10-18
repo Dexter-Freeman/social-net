@@ -1,29 +1,19 @@
 import { connect } from 'react-redux';
 import React from 'react';
 import Users from './Users';
-import usersAPI from './../../api/api';
-import { follow, unFollow, setUsers, setUsersCount, setCurrentPage, toggleIsFetching, toggleIsFollowingProgress } from '../../redux/usersReducer';
+import { follow, unFollow, setUsers, 
+    setUsersCount, setCurrentPage, getUsersTC, 
+    getUsersFromPageTC } from '../../redux/usersReducer';
 
 class UsersContainer extends React.Component {
     componentDidMount() {
-        this.props.toggleIsFetching(true);
-        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
-            .then((data) => {
-                this.props.toggleIsFetching(false);
-                this.props.setUsers(data.items);
-                this.props.setUsersCount(data.totalCount);
-            })
+        this.props.getUsersTC(this.props.currentPage, this.props.pageSize);
     }
 
     getUsersFromPage(page) {
-        this.props.toggleIsFetching(true);
-        usersAPI.getUsers(page, this.props.pageSize)
-            .then((data) => {
-                this.props.toggleIsFetching(false);
-                this.props.setUsers(data.items);
-            })
+        this.props.getUsersFromPageTC(page, this.props.pageSize)
     }
-
+    
     render() {
         let pagesCount = Math.ceil(this.props.totalCount / this.props.pageSize);
         let pages = [];
@@ -39,7 +29,6 @@ class UsersContainer extends React.Component {
             unFollow={this.props.unFollow}
             follow={this.props.follow}
             isFetching={this.props.isFetching}
-            toggleIsFollowingProgress={this.props.toggleIsFollowingProgress}
             isFollowingProgress={this.props.isFollowingProgress} />
         )
     }
@@ -57,4 +46,6 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, 
-    {follow, unFollow, setUsers, setUsersCount, setCurrentPage, toggleIsFetching, toggleIsFollowingProgress })(UsersContainer);
+    {follow, unFollow, setUsers, 
+        setUsersCount, setCurrentPage, getUsersTC, 
+        getUsersFromPageTC })(UsersContainer);
