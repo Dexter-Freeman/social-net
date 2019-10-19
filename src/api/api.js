@@ -28,15 +28,17 @@ const usersAPI = {
             .then(response => response.data)
     },
 
-    authMe() {
-        return instance.get(`auth/me`)
-            .then(response => response.data)
-    },
-
     setUserProfile(userId) {
         return instance.get(`profile/${userId}`)
             .then(response => response.data)
     }
 }
 
-export default usersAPI;
+const authAPI = {
+    authMe() {
+        return instance.get(`auth/me`)
+            .then(response => response.data)
+    }
+}
+
+export { usersAPI, authAPI };

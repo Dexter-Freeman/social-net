@@ -1,4 +1,4 @@
-import usersAPI from './../api/api';
+import {usersAPI} from './../api/api';
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -106,7 +106,7 @@ const toggleIsFollowingProgress = (isFetching, userId) => ({
     isFetching
 })
 
-const getUsersTC = (currentPage, pageSize) => {
+const getUsers = (currentPage, pageSize) => {
     return (dispatch) => {
         dispatch(toggleIsFetching(true));
         usersAPI.getUsers(currentPage, pageSize)
@@ -118,7 +118,7 @@ const getUsersTC = (currentPage, pageSize) => {
     }
 }
 
-const getUsersFromPageTC = (page, pageSize) => {
+const getUsersFromPage = (page, pageSize) => {
     return (dispatch) => {
         dispatch(toggleIsFetching(true));
         usersAPI.getUsers(page, pageSize)
@@ -152,9 +152,9 @@ const follow = (userId) => (dispatch) => {
 }
 
 export {
-    follow, unFollow, setUsers,
-    setUsersCount, setCurrentPage, toggleIsFetching,
-    toggleIsFollowingProgress, getUsersTC, getUsersFromPageTC
+    follow, unFollow,
+    setCurrentPage, toggleIsFetching,
+    toggleIsFollowingProgress, getUsers, getUsersFromPage
 };
 
 export default usersReducer;
