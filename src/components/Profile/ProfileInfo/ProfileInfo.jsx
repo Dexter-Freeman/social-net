@@ -17,12 +17,16 @@ const ProfileInfo = (props) => {
 				ava + description
 				<div>
 					<div>
-						<img src={props.profile.photos.small} alt='ava-small' />
+						<img src={
+							props.profile.photos.small ?
+								props.profile.photos.small
+								: 'http://www.alluserpics.com/data/thumbnails/17/03178.jpg'}
+							alt='ava-small' />
 					</div>
 					<div>
 						<span>About me: </span><span>{props.profile.aboutMe}</span>
 					</div>
-					
+
 				</div>
 			</div>
 		</div>

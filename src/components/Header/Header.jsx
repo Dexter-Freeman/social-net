@@ -9,7 +9,9 @@ const Header = (props) => {
                 src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW1qL2UGNRENFDzCrqI2f-4w8JJUdbXTUYucNacGlqZEPpbTzR'
                 alt='logo' />
             <div className={style.loginBlock}>
-               { props.isAuth ? <span className = { style.userName }>{props.login}</span> : <NavLink to='/login' >Login</NavLink>}
+                {props.isAuth ?
+                    <span className={style.userName}>{props.login}</span>
+                    : <NavLink to='/login' >Login</NavLink>}
             </div>
         </header>
     )
