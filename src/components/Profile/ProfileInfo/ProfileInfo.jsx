@@ -1,6 +1,7 @@
 import React from 'react';
 import style from './ProfileInfo.module.css';
 import Preloader from './../../common/Preloader/Preloader';
+import ProfileStatus from './ProfileStatus/ProfileStatus';
 
 const ProfileInfo = (props) => {
 	if (!props.profile) {
@@ -14,7 +15,7 @@ const ProfileInfo = (props) => {
 					alt='alt' />
 			</div>
 			<div className={style.profileDescription}>
-				ava + description
+				<ProfileStatus status={ 'turu-tu' } />
 				<div>
 					<div>
 						<img src={
