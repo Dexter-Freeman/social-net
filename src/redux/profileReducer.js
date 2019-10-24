@@ -1,12 +1,13 @@
-import {usersAPI} from './../api/api';
+import {userProfileAPI} from './../api/api';
 
 const addPost = 'addPost';
 const changeNewPostText = 'changeNewPostText';
 const Set_User_Profile = 'Set_User_Profile';
+const Set_User_Status = 'Set_User_Status';
 
 const initialState = {
     profile : null,
-    postsData: [{
+    postsData : [{
             id: 1,
             postText: "First post",
             likesCount: 5
@@ -27,7 +28,8 @@ const initialState = {
             likesCount: 1
         }
     ],
-    newPostText: ''
+    newPostText: '',
+    status : ''
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -50,6 +52,9 @@ const profileReducer = (state = initialState, action) => {
         
         case Set_User_Profile:
             return { ...state, profile : action.profile }
+
+        case Set_User_Status:
+            return { ...state, status : action.status }
             
         default:
             return state;
@@ -70,12 +75,32 @@ const setUserProfile = (profile) => ({
     profile
 });
 
+const setUserStatus = (status) => ({
+    type: Set_User_Status,
+    status
+})
+
 const getUserProfile = (userId) => (dispatch) => {  // Thunk creator
-    usersAPI.setUserProfile(userId)
-    .then((profile) => {
-        dispatch(setUserProfile(profile));
-    })
+    userProfileAPI.getUserProfile(userId)
+        .then((profile) => {
+            dispatch(setUserProfile(profile));
+        })
 };
 
-export { actionCreateAddPost, actionCreateChangeNewPostText, getUserProfile };
+const getUserStatus = (userId) => (dispatch) => {
+    userProfileAPI.getUserStatus(userId)
+        .then((status) => {
+            dispatch(setUserStatus(status));
+        })
+};
+
+const updateUserStatus = (status) => (dispatch) => {
+    userProfileAPI.updateUserStatus(status)
+        .then((response) => {
+            if (response.resultCode === 0) {dispatch(setUserStatus(status))}
+            else console.log(`somesing wrong, status didn't change. response -  ${response}`);
+        })
+}
+
+export { actionCreateAddPost, actionCreateChangeNewPostText, getUserProfile, getUserStatus, updateUserStatus };
 export default profileReducer;

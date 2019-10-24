@@ -2,12 +2,10 @@ import { actionCreateAddPost, actionCreateChangeNewPostText } from './../../../r
 import MyPosts from './MyPosts';
 import {connect} from 'react-redux';
 
-const mapStateToProps = (state) => {
-    return {
+const mapStateToProps = (state) => ({
 		postsData: state.profilePage.postsData,
 		newPostText: state.profilePage.newPostText
-    }
-};
+    });
 
 const mapDispatchToProps = (dispatch) => {
     return {

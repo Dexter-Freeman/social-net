@@ -26,19 +26,33 @@ const usersAPI = {
     unFollow(userId) {
         return instance.delete(`follow/${userId}`)
             .then(response => response.data)
-    },
-
-    setUserProfile(userId) {
-        return instance.get(`profile/${userId}`)
-            .then(response => response.data)
     }
-}
+};
 
 const authAPI = {
     authMe() {
         return instance.get(`auth/me`)
             .then(response => response.data)
     }
-}
+};
 
-export { usersAPI, authAPI };
+const userProfileAPI = {
+    getUserProfile(userId) {
+        return instance.get(`profile/${userId}`)
+            .then(response => response.data)
+    },
+
+    getUserStatus(userId) {
+        return instance.get(`profile/status/${userId}`)
+            .then(response => response.data)
+    },
+
+    updateUserStatus(status) {
+        return instance.put(`profile/status`, {
+            status
+        })
+            .then(response => response.data)
+    }
+};
+
+export { usersAPI, authAPI, userProfileAPI };

@@ -15,7 +15,7 @@ const ProfileInfo = (props) => {
 					alt='alt' />
 			</div>
 			<div className={style.profileDescription}>
-				<ProfileStatus status={ 'turu-tu' } />
+				<ProfileStatus status={ props.status } updateUserStatus={ props.updateUserStatus } />
 				<div>
 					<div>
 						<img src={
@@ -23,6 +23,9 @@ const ProfileInfo = (props) => {
 								props.profile.photos.small
 								: 'http://www.alluserpics.com/data/thumbnails/17/03178.jpg'}
 							alt='ava-small' />
+					</div>
+					<div>
+						<span>Name: {props.profile.fullName}</span>
 					</div>
 					<div>
 						<span>About me: </span><span>{props.profile.aboutMe}</span>

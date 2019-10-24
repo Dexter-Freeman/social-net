@@ -18,7 +18,7 @@ const initialState = {
         // { id: 4, avaUrl : 'http://www.alluserpics.com/data/thumbnails/17/03102.jpg', followed: false, fullName: 'Lena', status: 'I am a boss too', location: { city: 'Schelkino', country: 'Crimea' } },
 
     ],
-    pageSize: 5,
+    pageSize: 100,
     totalCount: 0,
     currentPage: 1,
     isFetching: true,
