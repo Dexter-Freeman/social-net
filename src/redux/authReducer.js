@@ -5,8 +5,8 @@ const Set_Users_Data = 'Set_Users_Data';
 const initialState = {
     isFetching: false,
     id: null,
-    email: 'blabla@bla.bla',
-    login: 'samurai',
+    email: '',
+    login: '',
     isAuth: false
 };
 
@@ -38,7 +38,7 @@ const getAuthUserData = () => (dispatch) => {
                 dispatch(setAuthUserData(id, email, login));
             }
         })
-}
+};
 
 export { getAuthUserData };
 export default authReducer;

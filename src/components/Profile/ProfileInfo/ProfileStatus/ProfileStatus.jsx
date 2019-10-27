@@ -16,7 +16,7 @@ class ProfileStatus extends React.Component {
         this.setState({
             editMode: false
         });
-        this.props.updateUserStatus(this.state.status);
+        this.props.updateUserStatus(this.state.status); // отправляем новый статус на сервер
     };
 
     onStatusChange(e) {
@@ -24,6 +24,14 @@ class ProfileStatus extends React.Component {
             status : e.currentTarget.value
         })
     };
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.status !== this.props.status) { // чтобы статус не занулялся
+            this.setState({
+                status : this.props.status
+            })
+        }
+    }
 
     render() {
         return (
