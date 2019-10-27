@@ -21,4 +21,14 @@ const withAuthRedirect = (Component) => {
     return connect(mapStateToProps, {})(RedirectComponent);
 };
 
+// const withAuthRedirectLoginPage = (Component) => {
+//     class RedirectComponent extends React.Component {
+//         render() {
+//             if (this.props.isAuth) {
+//                 return <Redirect />
+//             }
+//         }
+//     }
+// }
+
 export default withAuthRedirect;

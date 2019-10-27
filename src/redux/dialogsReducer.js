@@ -1,5 +1,6 @@
 const sendMessage = 'sendMessage';
-const changeNewMessageText = 'changeNewMessageText';
+// const changeNewMessageText = 'changeNewMessageText'; // так-как обработка формы теперь осуществляется при помощи redux-form,
+                                                        // то и изменения текста до отправки обрабатывает redux-form
 
 const initialState = {
     messagesData: [{
@@ -54,8 +55,7 @@ const initialState = {
             name: 'User 7',
             avaUrl: 'http://pikchyriki.net/avatar/prikolnye/100/12.jpg'
         }
-    ],
-    newMessageText: ''
+    ]
 };
 
 const dialogsReducer = (state = initialState, action) => {
@@ -65,31 +65,33 @@ const dialogsReducer = (state = initialState, action) => {
             let id = state.messagesData.length + 1;
             let newMessage = {
                 id: id,
-                messageText: state.newMessageText
+                messageText: action.newMessageText
             };
             return {...state,
-                newMessageText : '', 
-                messagesData : [...state.messagesData, newMessage]}
+                messagesData : [...state.messagesData, newMessage]};
         
-        case changeNewMessageText:
-            return {...state, newMessageText : action.newMessageText};
+        // case changeNewMessageText:   // так-как обработка формы теперь осуществляется при помощи redux-form,
+                                        // то и изменения текста до отправки обрабатывает redux-form
+        //     return {...state, newMessageText : action.newMessageText};
         
         default:
             return state;
     }
 };
 
-const actionCreateSendMessage = () => ({
-    type: sendMessage
+const actionCreateSendMessage = (newMessageText) => ({
+    type: sendMessage,
+    newMessageText
+
 });
 
-const actionCreateChangeNewMessageText = (newMessageText) => ({
-    type: changeNewMessageText,
-    newMessageText: newMessageText
-});
+// const actionCreateChangeNewMessageText = (newMessageText) => ({  // так-как обработка формы теперь осуществляется при помощи redux-form,
+                                        // то и изменения текста до отправки обрабатывает redux-form
+//     type: changeNewMessageText,
+//     newMessageText: newMessageText
+// });
 
 export {
-    actionCreateSendMessage,
-    actionCreateChangeNewMessageText
+    actionCreateSendMessage
 };
 export default dialogsReducer;

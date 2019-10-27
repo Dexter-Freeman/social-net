@@ -1,7 +1,7 @@
 import {userProfileAPI} from './../api/api';
 
-const addPost = 'addPost';
-const changeNewPostText = 'changeNewPostText';
+const ADD_POST = 'ADD_POST';
+// const changeNewPostText = 'changeNewPostText';
 const Set_User_Profile = 'Set_User_Profile';
 const Set_User_Status = 'Set_User_Status';
 
@@ -28,27 +28,25 @@ const initialState = {
             likesCount: 1
         }
     ],
-    newPostText: '',
     status : ''
 };
 
 const profileReducer = (state = initialState, action) => {
     switch (action.type) {
 
-        case addPost:{
-            let id = state.postsData.length + 1;
-            let newPost = {
+        case ADD_POST:{
+            const id = state.postsData.length + 1;
+            const newPost = {
                 id: id,
-                postText: state.newPostText,
+                postText: action.newPostText,
                 likesCount: 0
             };
-            return {...state, 
-                postsData : [...state.postsData, newPost], 
-                newPostText : ''};
+            return { ...state, 
+                postsData : [...state.postsData, newPost] };
         }
 
-        case changeNewPostText:
-            return {...state, newPostText : action.newPostText};
+        // case changeNewPostText:
+        //     return {...state, newPostText : action.newPostText};
         
         case Set_User_Profile:
             return { ...state, profile : action.profile }
@@ -61,14 +59,15 @@ const profileReducer = (state = initialState, action) => {
     }
 };
 
-const actionCreateAddPost = () => ({
-    type: addPost
+const actionCreateAddPost = (newPostText) => ({
+    type: ADD_POST,
+    newPostText
 });
 
-const actionCreateChangeNewPostText = (newPostText) => ({
-    type: changeNewPostText,
-    newPostText: newPostText
-});
+// const actionCreateChangeNewPostText = (newPostText) => ({
+//     type: changeNewPostText,
+//     newPostText: newPostText
+// });
 
 const setUserProfile = (profile) => ({
     type: Set_User_Profile,
@@ -78,7 +77,11 @@ const setUserProfile = (profile) => ({
 const setUserStatus = (status) => ({
     type: Set_User_Status,
     status
-})
+});
+
+const addPost = (newPostText) => (dispatch) => {
+    dispatch(actionCreateAddPost(newPostText));
+};
 
 const getUserProfile = (userId) => (dispatch) => {  // Thunk creator
     userProfileAPI.getUserProfile(userId)
@@ -102,5 +105,5 @@ const updateUserStatus = (status) => (dispatch) => {
         })
 }
 
-export { actionCreateAddPost, actionCreateChangeNewPostText, getUserProfile, getUserStatus, updateUserStatus };
+export { addPost, getUserProfile, getUserStatus, updateUserStatus };
 export default profileReducer;
