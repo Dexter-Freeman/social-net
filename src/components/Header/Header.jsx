@@ -8,7 +8,6 @@ const Header = (props) => {
             <img
                 src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW1qL2UGNRENFDzCrqI2f-4w8JJUdbXTUYucNacGlqZEPpbTzR'
                 alt='logo' />
-                k
             <div className={style.loginBlock}>
                 {props.isAuth ?
                     <span className={style.userName}>{props.login}</span>
