@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { Input, Checkbox } from '../../common/FormControls/FormControls';
+import { Input } from '../../common/FormControls/FormControls';
 import { required } from '../../../utils/validators';
 
 const LoginForm = (props) => {
