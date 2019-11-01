@@ -25,9 +25,9 @@ const LoginForm = (props) => {
             <Field
                 name='rememberMe'
                 component={Input}
-                type='checkbox' /> rememberMe
+                type='checkbox' /> Remember Me
         </div>
-        <button type="submit">Log in</button>
+        <button type="submit">Sign In</button>
     </form>
 };
 

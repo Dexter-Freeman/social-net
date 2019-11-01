@@ -7,7 +7,7 @@ const initialState = {
     isFetching: false,
     id: null,
     email: '',
-    login: '',
+    userName: '',
     isAuth: false
 };
 
@@ -24,12 +24,12 @@ const authReducer = (state = initialState, action) => {
     }
 };
 
-const setAuthUserData = (id, email, login, isAuth) => ({
+const setAuthUserData = (id, email, userName, isAuth) => ({
     type: Set_Users_Data,
     data: {
         id,
         email,
-        login,
+        userName,
         isAuth
     }
 });
@@ -38,17 +38,15 @@ const getAuthUserData = () => (dispatch) => {
     authAPI.authMe()
         .then((data) => {
             if (data.resultCode === 0) {
-                let { id, email, login } = data.data;
+                let { id, email, login  } = data.data;
                 dispatch(setAuthUserData(id, email, login, true));
             }
         })
 };
 
 const logIn = (formData) => (dispatch) => {
-    debugger;
-    let { email, password, rememberMe } = { ...formData }
+    let { email, password, rememberMe = false } = { ...formData }
         authAPI.logIn(email, password, rememberMe).then(data => {
-                debugger;
                 if (data.resultCode === 0) {
                     dispatch(getAuthUserData());
                 }
