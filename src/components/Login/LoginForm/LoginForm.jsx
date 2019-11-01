@@ -2,6 +2,7 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Input } from '../../common/FormControls/FormControls';
 import { required } from '../../../utils/validators';
+import style from './../../common/FormControls/FormControl.module.css';
 
 const LoginForm = (props) => {
     return <form onSubmit={props.handleSubmit}>
@@ -27,6 +28,12 @@ const LoginForm = (props) => {
                 component={Input}
                 type='checkbox' /> Remember Me
         </div>
+        {props.error ? 
+        <div className={style.formError}>
+            <span>{props.error}</span>
+        </div>
+        : ''
+        }
         <button type="submit">Sign In</button>
     </form>
 };
