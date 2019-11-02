@@ -9,7 +9,7 @@ const initialState = {
     id: null,
     email: '',
     userName: '',
-    isAuth: false
+    isAuth: null
 };
 
 const authReducer = (state = initialState, action) => {
@@ -36,7 +36,7 @@ const setAuthUserData = (id, email, userName, isAuth) => ({
 });
 
 const getAuthUserData = () => (dispatch) => {
-    authAPI.authMe()
+    return authAPI.authMe()
         .then((data) => {
             if (data.resultCode === 0) {
                 let { id, email, login  } = data.data;

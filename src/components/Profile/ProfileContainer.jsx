@@ -8,12 +8,10 @@ import { compose } from 'redux';
 
 class ProfileContainer extends React.Component {
   componentDidMount() {
-    debugger
     let userId = this.props.match.params.userId; // Выхватываем userId из адресной строки (url)
     // if (!userId) {
     //   userId = 3873;
     // }
-    debugger
     this.props.getUserProfile(userId);
     this.props.getUserStatus(userId);
   };
