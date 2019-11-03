@@ -98,10 +98,11 @@ const getUserStatus = (userId) => (dispatch) => {
 };
 
 const updateUserStatus = (status) => (dispatch) => {
+    debugger
     userProfileAPI.updateUserStatus(status)
         .then((response) => {
             if (response.resultCode === 0) {dispatch(setUserStatus(status))}
-            else console.log(`somesing wrong, status didn't change. response -  ${response}`);
+            else console.log(`somesing wrong, status didn't change. response -  ${JSON.stringify(response)}`);
         })
 }
 
