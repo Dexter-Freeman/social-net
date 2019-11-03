@@ -98,7 +98,6 @@ const getUserStatus = (userId) => (dispatch) => {
 };
 
 const updateUserStatus = (status) => (dispatch) => {
-    debugger
     userProfileAPI.updateUserStatus(status)
         .then((response) => {
             if (response.resultCode === 0) {dispatch(setUserStatus(status))}

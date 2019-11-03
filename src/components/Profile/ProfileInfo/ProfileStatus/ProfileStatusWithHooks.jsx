@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const ProfileStatusWithHooks = (props) => {
     let [editMode, setEditMode] = useState(false);
@@ -8,14 +8,18 @@ const ProfileStatusWithHooks = (props) => {
         setEditMode(true);
     };
 
-    const deactivateEditMode = () => {
-        setEditMode(false);
+    const deactivateEditMode = (e) => {
+        setEditMode(false); 
         props.updateUserStatus(status);
     };
 
     const onStatusChange = (e) => {
         setStatus(e.currentTarget.value);
     };
+
+    useEffect(() => {   // При изменении props.status будет заново устанавливаться setStatus
+        setStatus(props.status) // т.е. будет срабатывать только при изменении props
+    }, [props.status]);
 
     return (
         <div>
