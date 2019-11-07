@@ -1,4 +1,4 @@
-import {userProfileAPI} from './../api/api';
+import { userProfileAPI } from './../api/api';
 
 const ADD_POST = 'ADD_POST';
 // const changeNewPostText = 'changeNewPostText';
@@ -7,57 +7,59 @@ const Set_User_Status = 'Set_User_Status';
 const DELETE_POST = 'DELETE_POST';
 
 const initialState = {
-    profile : null,
-    postsData : [{
-            id: 1,
-            postText: "First post",
-            likesCount: 5
-        },
-        {
-            id: 2,
-            postText: "Second post",
-            likesCount: 3
-        },
-        {
-            id: 3,
-            postText: "some text",
-            likesCount: 25
-        },
-        {
-            id: 4,
-            postText: "more some text",
-            likesCount: 1
-        }
+    profile: null,
+    postsData: [{
+        id: 1,
+        postText: "First post",
+        likesCount: 5
+    },
+    {
+        id: 2,
+        postText: "Second post",
+        likesCount: 3
+    },
+    {
+        id: 3,
+        postText: "some text",
+        likesCount: 25
+    },
+    {
+        id: 4,
+        postText: "more some text",
+        likesCount: 1
+    }
     ],
-    status : ''
+    status: ''
 };
 
 const profileReducer = (state = initialState, action) => {
     switch (action.type) {
 
-        case ADD_POST:{
+        case ADD_POST: {
             const id = state.postsData.length + 1;
             const newPost = {
                 id: id,
                 postText: action.newPostText,
                 likesCount: 0
             };
-            return { ...state, 
-                postsData : [...state.postsData, newPost] };
+            return {
+                ...state,
+                postsData: [...state.postsData, newPost]
+            };
         }
 
         // case changeNewPostText:
         //     return {...state, newPostText : action.newPostText};
-        
+
         case Set_User_Profile:
-            return { ...state, profile : action.profile }
+            return { ...state, profile: action.profile }
 
         case Set_User_Status:
-            return { ...state, status : action.status }
-        
+            return { ...state, status: action.status }
+
         case DELETE_POST:
-            return { ...state, postsData : state.postsData.filter(post => post.id !== action.postId)}
-            
+            return { ...state, postsData: state.postsData.filter(post => post.id !== action.postId) }
+
         default:
             return state;
     }
@@ -69,9 +71,9 @@ export const actionCreateAddPost = (newPostText) => ({
 });
 
 export const deletePostAC = (postId) => ({
-    type : DELETE_POST,
+    type: DELETE_POST,
     postId
-})
+});
 
 // const actionCreateChangeNewPostText = (newPostText) => ({
 //     type: changeNewPostText,
@@ -92,27 +94,22 @@ const addPost = (newPostText) => (dispatch) => {
     dispatch(actionCreateAddPost(newPostText));
 };
 
-const getUserProfile = (userId) => (dispatch) => {  // Thunk creator
-    userProfileAPI.getUserProfile(userId)
-        .then((profile) => {
-            dispatch(setUserProfile(profile));
-        })
+const getUserProfile = (userId) => async (dispatch) => {  // Thunk creator
+    const profile = await userProfileAPI.getUserProfile(userId);
+    dispatch(setUserProfile(profile));
 };
 
-const getUserStatus = (userId) => (dispatch) => {
-    userProfileAPI.getUserStatus(userId)
-        .then((status) => {
-            dispatch(setUserStatus(status));
-        })
+const getUserStatus = (userId) => async (dispatch) => {
+    const status = await userProfileAPI.getUserStatus(userId);
+    dispatch(setUserStatus(status));
 };
 
-const updateUserStatus = (status) => (dispatch) => {
-    userProfileAPI.updateUserStatus(status)
-        .then((response) => {
-            if (response.resultCode === 0) {dispatch(setUserStatus(status))}
-            else console.log(`somesing wrong, status didn't change. response -  ${JSON.stringify(response)}`);
-        })
-}
+const updateUserStatus = (status) => async (dispatch) => {
+    const response = await userProfileAPI.updateUserStatus(status);
+    if (response.resultCode === 0) { 
+        dispatch(setUserStatus(status)) 
+    } else console.log(`somesing wrong, status didn't change. response -  ${JSON.stringify(response)}`);
+};
 
 export { addPost, getUserProfile, getUserStatus, updateUserStatus };
 export default profileReducer;

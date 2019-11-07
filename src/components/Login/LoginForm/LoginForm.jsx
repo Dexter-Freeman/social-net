@@ -4,8 +4,8 @@ import { Input } from '../../common/FormControls/FormControls';
 import { required } from '../../../utils/validators';
 import style from './../../common/FormControls/FormControl.module.css';
 
-const LoginForm = (props) => {
-    return <form onSubmit={props.handleSubmit}>
+const LoginForm = ({handleSubmit, error}) => {
+    return <form onSubmit={handleSubmit}>
         <div>
             <Field
                 placeholder='email'
@@ -28,9 +28,9 @@ const LoginForm = (props) => {
                 component={Input}
                 type='checkbox' /> Remember Me
         </div>
-        {props.error ? 
+        {error ? 
         <div className={style.formError}>
-            <span>{props.error}</span>
+            <span>{error}</span>
         </div>
         : ''
         }
