@@ -18,13 +18,7 @@ class UsersContainer extends React.Component {
     }
     
     render() {
-        let pagesCount = Math.ceil(this.props.totalCount / this.props.pageSize);
-        let pages = [];
-        for (let i = 1; i <= pagesCount; i++) {
-            pages.push(i);
-        }
         return (<Users
-            pages={pages}
             setCurrentPage={this.props.setCurrentPage}
             getUsersFromPage={this.getUsersFromPage.bind(this)}
             currentPage={this.props.currentPage}
@@ -32,7 +26,9 @@ class UsersContainer extends React.Component {
             unFollow={this.props.unFollow}
             follow={this.props.follow}
             isFetching={this.props.isFetching}
-            isFollowingProgress={this.props.isFollowingProgress} />
+            isFollowingProgress={this.props.isFollowingProgress}
+            totalCount={this.props.totalCount}
+            pageSize={this.props.pageSize} />
         )
     }
 }

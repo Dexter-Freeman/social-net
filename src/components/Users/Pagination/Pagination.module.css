@@ -1,0 +1,23 @@
+.currentPage {
+    font-weight: bold;
+    width: 25px;
+    display: inline-block;
+    text-align: center;
+    font-size: 18px;
+}
+
+.currentPage:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.paginationIem {
+    width: 25px;
+    display: inline-block;
+    text-align: center;
+}
+
+.paginationIem:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
