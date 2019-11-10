@@ -5,8 +5,7 @@ import Pagination from './Pagination/Pagination';
 import UserItem from './User/UserItem';
 
 const Users = (props) => {
-    return (
-        <div>
+    return <div>
             {props.isFetching ? <Preloader /> : null}
             <div>
                 <Pagination
@@ -30,8 +29,6 @@ const Users = (props) => {
                 </div>
             </div>
         </div>
-
-    );
 };
 
 export default Users;

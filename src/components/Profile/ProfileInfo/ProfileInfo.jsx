@@ -7,8 +7,7 @@ const ProfileInfo = (props) => {
 	if (!props.profile) {
 		return <Preloader />
 	}
-	return (
-		<div>
+	return <div>
 			<div className={style.profileDescription}>
 				<ProfileStatusWithHooks status={ props.status } updateUserStatus={ props.updateUserStatus } />
 				<div>
@@ -29,7 +28,6 @@ const ProfileInfo = (props) => {
 				</div>
 			</div>
 		</div>
-	)
-}
+};
 
 export default ProfileInfo;
