@@ -15,13 +15,15 @@ class ProfileContainer extends React.Component {
 		if (!userId) {
 			userId = this.props.authorizedUserId;
 		};
+		let isOwner = (+userId === +this.props.authorizedUserId) ? true : false;
+		this.isOwner = isOwner;
 		this.props.getUserProfile(userId);
 		this.props.getUserStatus(userId);
 	};
 
 	render() {
 		return (
-			<Profile {...this.props} />
+			<Profile {...this.props } isOwner={this.isOwner}/>
 		)
 	}
 };

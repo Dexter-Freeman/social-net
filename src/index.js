@@ -4,17 +4,17 @@ import store from './redux/redux-store';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { HashRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 ReactDOM.render(
-    <HashRouter>
+    <BrowserRouter>
         {/* Для того чтобы на Git-Hub Pages работала навигация, роутинг сделан через HashRouter, 
         для работы сайта не на гитхабе нужен BrowserRouter */}
         <Provider store={store} >
             <App />
         </Provider>
-    </HashRouter>,
+    </BrowserRouter>,
     document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
