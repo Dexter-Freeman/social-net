@@ -106,10 +106,24 @@ const getUserStatus = (userId) => async (dispatch) => {
 
 const updateUserStatus = (status) => async (dispatch) => {
     const response = await userProfileAPI.updateUserStatus(status);
-    if (response.resultCode === 0) { 
-        dispatch(setUserStatus(status)) 
+    if (response.resultCode === 0) {
+        dispatch(setUserStatus(status))
     } else console.log(`somesing wrong, status didn't change. response -  ${JSON.stringify(response)}`);
 };
 
-export { addPost, getUserProfile, getUserStatus, updateUserStatus };
+const saveFoto = (photo) => async (dispatch) => {
+    const response = await userProfileAPI.updateUserPhoto(photo);
+    if (response.data.resultCode === 0) {
+        // dispatch(savePhotoSuccsess(response.data.photos));
+    }
+};
+
+const updateUserProfile = (profile) => async (dispatch) => {
+    const response = await userProfileAPI.updateUserProfile(profile);
+    if (response.data.resultCode === 0) {
+        dispatch(setUserProfile(profile));
+    }
+}
+
+export { addPost, getUserProfile, getUserStatus, updateUserStatus, saveFoto, updateUserProfile };
 export default profileReducer;

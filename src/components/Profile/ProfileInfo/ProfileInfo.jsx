@@ -2,54 +2,59 @@ import React, { useState } from 'react';
 import style from './ProfileInfo.module.css';
 import Preloader from './../../common/Preloader/Preloader';
 import ProfileStatusWithHooks from './ProfileStatus/ProfileStatusWithHooks';
+import ProfileDataForm from './ProfileDataForm/ProfileDataForm';
+import ContactItem from './ContactItem';
 
 const ProfileInfo = (props) => {
 	let [editMode, setEditMode] = useState(false);
 	if (!props.profile) {
 		return <Preloader />
 	}
+
+	const onSubmit = (formData) => {
+		// props.onSendMessage(formData.newMessageText);
+		console.log(formData);
+		console.log(JSON.stringify(formData));
+		props.updateUserProfile(formData);
+	};
+	
 	return <div>
 		<div className={style.profileDescription}>
 			<ProfileStatusWithHooks status={props.status} updateUserStatus={props.updateUserStatus} />
-			{editMode ? 
-				<ProfileDataForm profile = {props.profile} /> 
-				: <ProfileData profile={props.profile} goToEditMode={() => {setEditMode(true)}} isOwner={props.isOwner}/>}			
+			<div>
+				<img src={
+					props.profile.photos.small ?
+					props.profile.photos.small
+						: 'http://www.alluserpics.com/data/thumbnails/17/03178.jpg'}
+					alt='ava-small' />
+			</div>
+			{editMode ?
+				<ProfileDataForm profile={props.profile} onSubmit={onSubmit} />
+				: <ProfileData profile={props.profile} goToEditMode={() => { setEditMode(true) }} isOwner={props.isOwner} />}
 		</div>
 	</div>
 };
 
-const ContactItem = ({contactName, contactValue}) => {
-	return <div>
-		<span><b>{contactName} - </b></span>
-		<span>{contactValue ? contactValue : `none`}</span>
-	</div>
-};
 
-const ProfileData = ({profile, isOwner, goToEditMode}) => {
+
+const ProfileData = ({ profile, isOwner, goToEditMode }) => {
 	return <div>
 		{isOwner ? <div>
 			<button onClick={goToEditMode}>Edit</button>
 		</div> : ``}
 		<div>
-			<img src={
-				profile.photos.small ?
-				profile.photos.small
-					: 'http://www.alluserpics.com/data/thumbnails/17/03178.jpg'}
-				alt='ava-small' />
+			<span><b>Name:</b> {profile.fullName}</span>
 		</div>
 		<div>
-			<span>Name: {profile.fullName}</span>
-		</div>
-		<div>
-			<span>About me: </span><span>{profile.aboutMe}</span>
+			<span><b>About me:</b> </span><span>{profile.aboutMe}</span>
 		</div>
 		<div>
 			<div>
-				<span>Looking for a job: </span><span>{profile.lookingForAJob ? `yes` : `no`}</span>
+				<span><b>Looking for a job:</b> </span><span>{profile.lookingForAJob ? `yes` : `no`}</span>
 			</div>
 			{profile.lookingForAJob ?
 				<div>
-					<span>Looking for a job description: </span>
+					<span><b>Looking for a job description:</b> </span>
 					<span>{profile.lookingForAJobDescription}</span>
 				</div>
 				: ``}
@@ -61,48 +66,11 @@ const ProfileData = ({profile, isOwner, goToEditMode}) => {
 					contactName={key}
 					contactValue={profile.contacts[key]} />
 			})}
-		</div> }
+		</div>}
 
 	</div>
 };
 
-const ProfileDataForm = (profile) => {
-	debugger
-	return <div>
-		<div>
-			<img src={
-				profile.photos.small ?
-					profile.photos.small
-					: 'http://www.alluserpics.com/data/thumbnails/17/03178.jpg'}
-				alt='ava-small' />
-		</div>
-		<div>
-			<span>Name: {profile.fullName}</span>
-		</div>
-		<div>
-			<span>About me: </span><span>{profile.aboutMe}</span>
-		</div>
-		<div>
-			<div>
-				<span>Looking for a job: </span><span>{profile.lookingForAJob ? `yes` : `no`}</span>
-			</div>
-			{profile.lookingForAJob ?
-				<div>
-					<span>Looking for a job description: </span>
-					<span>{profile.lookingForAJobDescription}</span>
-				</div>
-				: ``}
-		</div>
-		{/* <div>
-			<span>Contacts: </span>{Object.keys(profile.contacts).map(key => {
-				return <ContactItem
-					key={key}
-					contactName={key}
-					contactValue={profile.contacts[key]} />
-			})}
-		</div> */}
 
-	</div>
-};
 
 export default ProfileInfo;
