@@ -12,10 +12,13 @@ const ProfileInfo = (props) => {
 	}
 
 	const onSubmit = (formData) => {
-		// props.onSendMessage(formData.newMessageText);
-		console.log(formData);
-		console.log(JSON.stringify(formData));
-		props.updateUserProfile(formData);
+		// console.log(formData);
+		// console.log(JSON.stringify(formData));
+		
+		props.updateUserProfile(formData).then(() => {
+			setEditMode(false);
+		})
+		
 	};
 	
 	return <div>
@@ -29,7 +32,7 @@ const ProfileInfo = (props) => {
 					alt='ava-small' />
 			</div>
 			{editMode ?
-				<ProfileDataForm profile={props.profile} onSubmit={onSubmit} />
+				<ProfileDataForm initialValues={props.profile} onSubmit={onSubmit} />
 				: <ProfileData profile={props.profile} goToEditMode={() => { setEditMode(true) }} isOwner={props.isOwner} />}
 		</div>
 	</div>

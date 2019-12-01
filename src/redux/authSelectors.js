@@ -1,5 +1,5 @@
 const getAuthUserId = (state) => {
-    return state.auth.id;
+    return state.auth.userId;
 };
 
 export { getAuthUserId };

@@ -6,7 +6,7 @@ const SET_LOGINED_USER_DATA = 'SET_LOGINED_USER_DATA';
 
 const initialState = {
     isFetching: false,
-    id: null,
+    userId: null,
     email: '',
     userName: '',
     isAuth: null
@@ -18,17 +18,17 @@ const authReducer = (state = initialState, action) => {
         case Set_Users_Data:
             return { ...state, ...action.data }
         case SET_LOGINED_USER_DATA:
-            return { ...state, id: action.id, isAuth: true }
+            return { ...state, userId: action.userId, isAuth: true }
 
         default:
             return state;
     }
 };
 
-const setAuthUserData = (id, email, userName, isAuth) => ({
+const setAuthUserData = (userId, email, userName, isAuth) => ({
     type: Set_Users_Data,
     data: {
-        id,
+        userId,
         email,
         userName,
         isAuth
@@ -49,7 +49,6 @@ const logIn = (formData) => async (dispatch) => {
     if (data.resultCode === 0) {
         dispatch(getAuthUserData());
     } else if (data.resultCode === 1) {
-        // let action = stopSubmit('logIn', {_error : `${data.messages[0]}`});
         dispatch(stopSubmit('logIn', { _error: `${data.messages[0]}` }));
     };
 };

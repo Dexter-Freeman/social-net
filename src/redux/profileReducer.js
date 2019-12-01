@@ -1,10 +1,12 @@
 import { userProfileAPI } from './../api/api';
+import { stopSubmit } from 'redux-form';
 
 const ADD_POST = 'ADD_POST';
 // const changeNewPostText = 'changeNewPostText';
 const Set_User_Profile = 'Set_User_Profile';
 const Set_User_Status = 'Set_User_Status';
 const DELETE_POST = 'DELETE_POST';
+const SAVE_PHOTO_SUCCSESS = 'SAVE_PHOTO_SUCCSESS';
 
 const initialState = {
     profile: null,
@@ -60,6 +62,9 @@ const profileReducer = (state = initialState, action) => {
         case DELETE_POST:
             return { ...state, postsData: state.postsData.filter(post => post.id !== action.postId) }
 
+        case SAVE_PHOTO_SUCCSESS:
+            return { ...state, profile : { ...state.profile, photos : action.photos } }
+
         default:
             return state;
     }
@@ -90,6 +95,12 @@ const setUserStatus = (status) => ({
     status
 });
 
+const savePhotoSuccsess = (photos) => ({
+    type: SAVE_PHOTO_SUCCSESS,
+    photos
+});
+
+
 const addPost = (newPostText) => (dispatch) => {
     dispatch(actionCreateAddPost(newPostText));
 };
@@ -107,6 +118,7 @@ const getUserStatus = (userId) => async (dispatch) => {
 const updateUserStatus = (status) => async (dispatch) => {
     const response = await userProfileAPI.updateUserStatus(status);
     if (response.resultCode === 0) {
+        debugger
         dispatch(setUserStatus(status))
     } else console.log(`somesing wrong, status didn't change. response -  ${JSON.stringify(response)}`);
 };
@@ -114,16 +126,20 @@ const updateUserStatus = (status) => async (dispatch) => {
 const saveFoto = (photo) => async (dispatch) => {
     const response = await userProfileAPI.updateUserPhoto(photo);
     if (response.data.resultCode === 0) {
-        // dispatch(savePhotoSuccsess(response.data.photos));
+        dispatch(savePhotoSuccsess(response.data.photos));
     }
 };
 
-const updateUserProfile = (profile) => async (dispatch) => {
+const updateUserProfile = (profile) => async (dispatch, getState) => {
+    const userId = getState().auth.userId;
     const response = await userProfileAPI.updateUserProfile(profile);
-    if (response.data.resultCode === 0) {
-        dispatch(setUserProfile(profile));
+    if (response.resultCode === 0) {
+        dispatch(getUserProfile(userId));
+    } else {
+        dispatch(stopSubmit('profileDataForm', { _error: `${response.messages[0]}` }));
+        return Promise.reject(response.messages[0]);
     }
-}
+};
 
 export { addPost, getUserProfile, getUserStatus, updateUserStatus, saveFoto, updateUserProfile };
 export default profileReducer;
