@@ -7,29 +7,39 @@ import ContactItem from './ContactItem';
 
 const ProfileInfo = (props) => {
 	let [editMode, setEditMode] = useState(false);
+
 	if (!props.profile) {
 		return <Preloader />
-	}
+	};
 
 	const onSubmit = (formData) => {
-		// console.log(formData);
-		// console.log(JSON.stringify(formData));
-		
 		props.updateUserProfile(formData).then(() => {
 			setEditMode(false);
 		})
-		
 	};
-	
+
+	const onAvaChange = (e) => {
+		console.log(e.target.files[0].name);
+		if ( e.target.files.length) {
+			props.saveFoto(e.target.files[0]);
+		}
+	};
+
 	return <div>
 		<div className={style.profileDescription}>
 			<ProfileStatusWithHooks status={props.status} updateUserStatus={props.updateUserStatus} />
 			<div>
-				<img src={
-					props.profile.photos.small ?
-					props.profile.photos.small
-						: 'http://www.alluserpics.com/data/thumbnails/17/03178.jpg'}
-					alt='ava-small' />
+				<div>
+					<img src={
+						props.profile.photos.large ?
+							props.profile.photos.large
+							: 'http://www.alluserpics.com/data/thumbnails/17/03178.jpg'}
+						alt='ava-large' />
+				</div>
+				{props.isOwner ? <div>
+					<input type="file" onChange={onAvaChange} /><span>Change avatar</span>
+				</div>
+					: ``}
 			</div>
 			{editMode ?
 				<ProfileDataForm initialValues={props.profile} onSubmit={onSubmit} />

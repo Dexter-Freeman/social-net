@@ -10,7 +10,7 @@ import { getProfile, getStatus } from '../../redux/profileSelectors';
 
 class ProfileContainer extends React.Component {
 
-	componentDidMount() {
+	refreshUserProfile() {
 		let userId = this.props.match.params.userId; // Выхватываем userId из адресной строки (url)
 		if (!userId) {
 			userId = this.props.authorizedUserId;
@@ -19,7 +19,17 @@ class ProfileContainer extends React.Component {
 		this.isOwner = isOwner;
 		this.props.getUserProfile(userId);
 		this.props.getUserStatus(userId);
+	}
+
+	componentDidMount() {
+		this.refreshUserProfile();
 	};
+
+	componentDidUpdate(prevProps, prevState) {
+		if ( this.props.match.params.userId !== prevProps.match.params.userId ) {
+			this.refreshUserProfile();
+		}
+    };
 
 	render() {
 		return (
