@@ -12,6 +12,8 @@ const ProfileInfo = (props) => {
 		return <Preloader />
 	};
 
+	const avaInput = React.createRef();
+
 	const onSubmit = (formData) => {
 		props.updateUserProfile(formData).then(() => {
 			setEditMode(false);
@@ -19,7 +21,6 @@ const ProfileInfo = (props) => {
 	};
 
 	const onAvaChange = (e) => {
-		console.log(e.target.files[0].name);
 		if ( e.target.files.length) {
 			props.saveFoto(e.target.files[0]);
 		}
@@ -37,7 +38,13 @@ const ProfileInfo = (props) => {
 						alt='ava-large' />
 				</div>
 				{props.isOwner ? <div>
-					<input type="file" onChange={onAvaChange} /><span>Change avatar</span>
+					<input type="file" 
+						style={{display : 'none'}}
+						onChange={onAvaChange} 
+						name='changeAva' 
+						ref={avaInput}
+						id='changeAva' /><span>Change avatar: </span>
+					<button onClick={() => avaInput.current.click()}>Select new ava</button>
 				</div>
 					: ``}
 			</div>

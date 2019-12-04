@@ -72,7 +72,6 @@ const userProfileAPI = {
     updateUserPhoto(photo) {
         const formData = new FormData();
         formData.append('image', photo);
-        debugger
         return instance.put(`profile/photo`, formData, {
             headers : {
                 'Content-Type': 'multipart/form-data'

@@ -120,14 +120,14 @@ const updateUserStatus = (status) => async (dispatch) => {
     if (response.resultCode === 0) {
         debugger
         dispatch(setUserStatus(status))
-    } else console.log(`somesing wrong, status didn't change. response -  ${JSON.stringify(response)}`);
+    } else console.log(`somesing wrong, status didn't change. response -  ${JSON.stringify(response.messages)}`);
 };
 
 const saveFoto = (photo) => async (dispatch) => {
     const response = await userProfileAPI.updateUserPhoto(photo);
-    if (response.data.resultCode === 0) {
+    if (response.resultCode === 0) {
         dispatch(savePhotoSuccsess(response.data.photos));
-    }
+    } else console.log(`somesing wrong, ava didn't change. response -  ${JSON.stringify(response.messages)}`);
 };
 
 const updateUserProfile = (profile) => async (dispatch, getState) => {
