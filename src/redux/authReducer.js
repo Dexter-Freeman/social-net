@@ -1,15 +1,17 @@
-import { authAPI } from './../api/api';
+import { authAPI, securityAPI } from './../api/api';
 import { stopSubmit } from 'redux-form';
 
 const Set_Users_Data = 'Set_Users_Data';
 const SET_LOGINED_USER_DATA = 'SET_LOGINED_USER_DATA';
+const SET_CAPTCHA_URL_SUCCSESS = 'SET_CAPTCHA_URL_SUCCSESS'; 
 
 const initialState = {
     isFetching: false,
     userId: null,
     email: '',
     userName: '',
-    isAuth: null
+    isAuth: null,
+    captchaURL : null
 };
 
 const authReducer = (state = initialState, action) => {
@@ -19,6 +21,8 @@ const authReducer = (state = initialState, action) => {
             return { ...state, ...action.data }
         case SET_LOGINED_USER_DATA:
             return { ...state, userId: action.userId, isAuth: true }
+        case SET_CAPTCHA_URL_SUCCSESS: 
+            return { ...state, captchaURL : action.data }
 
         default:
             return state;
@@ -35,21 +39,36 @@ const setAuthUserData = (userId, email, userName, isAuth) => ({
     }
 });
 
+const setCaptchaURL = (captchaURL) => ({
+    type : SET_CAPTCHA_URL_SUCCSESS,
+    data : captchaURL
+})
+
 const getAuthUserData = () => async (dispatch) => {
     const data = await authAPI.authMe();
     if (data.resultCode === 0) {
-        let { id, email, login } = data.data;
+        const { id, email, login } = data.data;
         dispatch(setAuthUserData(id, email, login, true));
     }
 };
 
-const logIn = (formData) => async (dispatch) => {
-    let { email, password, rememberMe = false } = { ...formData }
-    const data = await authAPI.logIn(email, password, rememberMe);
-    if (data.resultCode === 0) {
-        dispatch(getAuthUserData());
-    } else if (data.resultCode === 1) {
-        dispatch(stopSubmit('logIn', { _error: `${data.messages[0]}` }));
+const getCaptcha = () => async (dispatch) => {
+    const response = await securityAPI.getCaptcha();
+    const captchaURL = response.url;
+    dispatch( setCaptchaURL( captchaURL ));
+};
+
+const logIn = ( formData ) => async ( dispatch ) => {
+    const { email, password, rememberMe = false, captcha = null } = { ...formData }
+    const data = await authAPI.logIn( email, password, rememberMe, captcha );
+    if ( data.resultCode === 0 ) {
+        dispatch( getAuthUserData() );
+
+    } else {
+        if ( data.resultCode === 10 ) {
+            dispatch( getCaptcha() );
+        }
+        dispatch( stopSubmit( 'logIn', { _error: `${data.messages[0]}` } ) );
     };
 };
 

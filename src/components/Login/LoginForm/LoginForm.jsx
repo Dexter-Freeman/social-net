@@ -4,14 +4,14 @@ import { Input } from '../../common/FormControls/FormControls';
 import { required } from '../../../utils/validators';
 import style from './../../common/FormControls/FormControl.module.css';
 
-const LoginForm = ({handleSubmit, error}) => {
+const LoginForm = ({ handleSubmit, error, captchaURL }) => {
     return <form onSubmit={handleSubmit}>
         <div>
             <Field
                 placeholder='email'
                 name='email'
                 component={Input}
-                type='text' 
+                type='text'
                 validate={[required]} />
         </div>
         <div>
@@ -28,11 +28,22 @@ const LoginForm = ({handleSubmit, error}) => {
                 component={Input}
                 type='checkbox' /> Remember Me
         </div>
-        {error ? 
-        <div className={style.formError}>
-            <span>{error}</span>
+        {error ?
+            <div className={style.formError}>
+                <span>{error}</span>
+            </div>
+            : ''
+        }
+        {captchaURL ? <div>
+            <img src={captchaURL} alt='Captcha' />
+            <Field
+                placeholder='Input text from image'
+                name='captcha'
+                component={Input}
+                type='text'
+                validate={[required]} />
         </div>
-        : ''
+            : ''
         }
         <button type="submit">Sign In</button>
     </form>

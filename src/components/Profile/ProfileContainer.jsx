@@ -12,7 +12,7 @@ class ProfileContainer extends React.Component {
 
 	refreshUserProfile() {
 		let userId = this.props.match.params.userId; // Выхватываем userId из адресной строки (url)
-		if (!userId) {
+		if ( !userId || userId === 'undefined' ) {
 			userId = this.props.authorizedUserId;
 		};
 		let isOwner = (+userId === +this.props.authorizedUserId) ? true : false;
