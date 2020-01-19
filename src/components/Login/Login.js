@@ -2,14 +2,13 @@ import React from 'react';
 import LoginForm from './LoginForm/LoginForm';
 import { Redirect } from 'react-router-dom';
 
-const Login = ({logIn, isAuth, id, captchaURL}) => {
-    
+const Login = ({logIn, isAuth, userId, captchaURL}) => {
     const onSubmit = (formData) => {
         logIn(formData);
     };
-
+debugger
     if (isAuth) {
-        return <Redirect to={`/profile/${id}`} />
+        return <Redirect to={`/profile/${userId}`} />
     }
 
     return <div>

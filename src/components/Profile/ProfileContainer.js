@@ -1,7 +1,7 @@
 import React from 'react';
 import Profile from './Profile';
 import { connect } from 'react-redux';
-import { getUserProfile, getUserStatus, updateUserStatus, updateUserProfile, saveFoto } from './../../redux/profileReducer';
+import { getUserProfile, getUserStatus, updateUserStatus, updateUserProfile, saveFoto } from '../../redux/profileReducer';
 import { withRouter } from 'react-router-dom';
 import withAuthRedirect from '../../hoc/withAuthRedirectComponent';
 import { compose } from 'redux';
@@ -12,13 +12,14 @@ class ProfileContainer extends React.Component {
 
 	refreshUserProfile() {
 		let userId = this.props.match.params.userId; // Выхватываем userId из адресной строки (url)
-		if ( !userId || userId === 'undefined' ) {
+		if ( !userId ) {
 			userId = this.props.authorizedUserId;
 		};
 		let isOwner = (+userId === +this.props.authorizedUserId) ? true : false;
 		this.isOwner = isOwner;
 		this.props.getUserProfile(userId);
 		this.props.getUserStatus(userId);
+		debugger
 	}
 
 	componentDidMount() {
